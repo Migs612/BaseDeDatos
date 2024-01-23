@@ -22,11 +22,37 @@ INNER JOIN PAGO P ON P.CODIGO_CLIENTE = C.CODIGO_CLIENTE
 ORDER BY P.ID_TRANSACCION;
 
 -- 3. Muestra el nombre de los clientes que no hayan realizado pagos junto con el nombre de sus representantes de ventas.
+
+SELECT
+    CONCAT(C.NOMBRE_CONTACTO," ",C.APELLIDO_CONTACTO) CLIENTE,
+    CONCAT(E.NOMBRE, ' ', E.APELLIDO1, ' ', E.APELLIDO2) REPRESENTANTE_DE_VENTAS
+FROM CLIENTE C 
+INNER JOIN EMPLEADO E ON C.CODIGO_EMPLEADO_REP_VENTAS = E.CODIGO_EMPLEADO
+LEFT JOIN PAGO P ON P.CODIGO_CLIENTE = C.CODIGO_CLIENTE
+WHERE P.ID_TRANSACCION IS NULL OR P.CODIGO_CLIENTE IS NULL;
+
+
 -- 4. Devuelve el nombre de los clientes que han hecho pagos y el nombre de sus representantes junto con la ciudad de la oficina a la que pertenece el representante.
 -- 5. Devuelve el nombre de los clientes que no hayan hecho pagos y el nombre de sus representantes junto con la ciudad de la oficina a la que pertenece el representante.
 -- 6. Lista la dirección de las oficinas que tengan clientes en Fuenlabrada.
 -- 7. Devuelve el nombre de los clientes y el nombre de sus representantes junto con la ciudad de la oficina a la que pertenece el representante.
+SELECT *
+FROM CLIENTE C INNER JOIN EMPLEADO B
+ON C.CODIGO_EMPLEADO_REP_VENTAS=B.CODIGO_EMPLEADO
+INNER JOIN OFICINA C ON B.CODIGO_OFICINA=C.CODIGO_OFICINA;
+
+SELECT 
+CONCAT(C.NOMBRE_CONTACTO," ",C.APELLIDO_CONTACTO) CLIENTE,
+CONCAT(E.NOMBRE, ' ', E.APELLIDO1, ' ', E.APELLIDO2) REPRESENTANTE_DE_VENTAS, O.CIUDAD "CIUDAD REPRESENTANTE"
+FROM CLIENTE C, EMPLEADO E,OFICINA O
+WHERE C.CODIGO_EMPLEADO_REP_VENTAS=E.CODIGO_EMPLEADO AND
+E.CODIGO_OFICINA=O.CODIGO_OFICINA;
+
 -- 8. Devuelve un listado con el nombre de los empleados junto con el nombre de sus jefes.
+SELECT T.APELLIDO1,J.APELLIDO1
+FROM EMPLEADO T, EMPLEADO J
+WHERE T.CODIGO_JEFE=J.CODIGO_EMPLEADO
+ORDER BY JEFE,TRABAJADOR;
 -- 9. Devuelve un listado que muestre el nombre de cada empleados, el nombre de su jefe y el nombre del jefe de sus jefe.
 -- 10. Devuelve el nombre de los clientes a los que no se les ha entregado a tiempo un pedido.
 -- 11. Devuelve un listado de las diferentes gamas de producto que ha comprado cada cliente.
