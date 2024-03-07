@@ -29,7 +29,7 @@ SELECT
 FROM CLIENTE C 
 INNER JOIN EMPLEADO E ON C.CODIGO_EMPLEADO_REP_VENTAS = E.CODIGO_EMPLEADO
 LEFT JOIN PAGO P ON P.CODIGO_CLIENTE = C.CODIGO_CLIENTE
-WHERE P.ID_TRANSACCION IS NULL;
+WHERE P.CODIGO_CLIENTE IS NULL;
 
 -- 4. Devuelve el nombre de los clientes que han hecho pagos y el nombre de sus representantes junto con la ciudad de la oficina a la que pertenece el representante.
 
